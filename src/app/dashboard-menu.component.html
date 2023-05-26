@@ -1,0 +1,22 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Signature Verification Dashboard</mat-card-title>
+   
+  </mat-card-header>
+  <mat-card-actions>
+  <a mat-button (click)="verification()">IFT – Signature Verification
+  </a>
+  <br>
+  <a mat-button (click)="verificationData()">IFT – Signature Verification Data</a>
+  </mat-card-actions>
+  <mat-card-content>
+    <div *ngIf="isData; else falseCondition">
+      <verification-data ></verification-data>
+    </div>
+    <ng-template #falseCondition>
+    
+    </ng-template>
+      
+   
+  </mat-card-content>
+</mat-card>

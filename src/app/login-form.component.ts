@@ -1,37 +1,10 @@
-import { Input, Component, Output, EventEmitter } from '@angular/core';
+import {  Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ConfigService } from './api.service';
 
 @Component({
   selector: 'my-login-form',
-  template: `
-      <mat-card>
-            <mat-card-title>Signature Verification Login</mat-card-title>
-      <mat-card-content>
-        <form [formGroup]="form" (ngSubmit)="submit()">
-          <p>
-            <mat-form-field>
-              <input type="text" matInput placeholder="Username" formControlName="username">
-            </mat-form-field>
-          </p>
-
-          <p>
-            <mat-form-field>
-              <input type="password" matInput placeholder="Password" formControlName="password">
-            </mat-form-field>
-          </p>
-
-          <p *ngIf="error" class="error">
-            {{ error }}
-          </p>
-
-          <div class="button">
-            <button type="submit" mat-button>Login</button>
-          </div>
-
-        </form>
-      </mat-card-content>
-    </mat-card>
-  `,
+  templateUrl: './login-form.component.html',
   styles: [
     `
       :host {
@@ -61,20 +34,30 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       .button {
         display: flex;
         justify-content: flex-end;
-        color:blue
       }
     `,
   ],
 
 })
-export class LoginFormComponent {
-  form: FormGroup = new FormGroup({
-    username: new FormControl('',Validators.required),
-    password: new FormControl('',Validators.required),
-  });
+export class LoginFormComponent implements OnInit{
+
+    form: FormGroup = new FormGroup({
+        username: new FormControl('',Validators.required),
+        password: new FormControl('',Validators.required),
+      });
+      constructor(private configService:ConfigService){
+
+      }
+    ngOnInit(): void {
+        
+    }
+  
 
   submit() {
     if (this.form.valid) {
+        this.configService.getUserDetails().subscribe(data=>{
+console.log(data);
+        });
       this.submitEM.emit(true);
     }else{
         this.error="User details invalid"; 
