@@ -1,27 +1,17 @@
-import {  Component } from '@angular/core';
+import {  Component, Input, SimpleChanges } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
+import { AuthenticationService } from './auth.service';
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  createdOn: string;
+  priority: string;
+  sourceBu: string;
+  businessKey: string;
+  documentCaptureReference:string;
+  accountShortName:string;
+  transactionCurrency:string;
+  transactionAmount:number;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-
-
 @Component({
   selector: 'verification-data',
   templateUrl: './verification-data.component.html',
@@ -43,10 +33,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class VeriifcationDataComponent {
 
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['select', 'createdOn', 'priority', 
+  'sourceBu', 'businessKey','documentCaptureReference','accountShortName','transactionCurrency','transactionAmount'];
+  
+  dataSource = new MatTableDataSource<PeriodicElement>([]);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
+  @Input()request: any={};
+
+  constructor(private authenticationService: AuthenticationService){
+
+  }
+  ngOnChanges(changes: SimpleChanges ) {
+   this.getAllDetails();
+  }
+
+  getAllDetails(){
+    this.authenticationService.getEvenSourceDetails("unassigned").subscribe((data: PeriodicElement[]) => {
+      this.dataSource.data = data;
+      });
+  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -69,7 +75,23 @@ export class VeriifcationDataComponent {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.businessKey}`;
+  }
+
+  assignedRequet(){
+  this.authenticationService.changeEventStatus(this.selection.selected,"proceed").subscribe
+  ((item: PeriodicElement[]) => {
+    this.dataSource = new MatTableDataSource<PeriodicElement>(item);
+    this.selection = new SelectionModel<PeriodicElement>(true, []);
+  });
+  }
+
+  rejectRequest(){
+    this.authenticationService.changeEventStatus(this.selection.selected,"reject").subscribe
+    ((item: PeriodicElement[]) => {
+      this.dataSource = new MatTableDataSource<PeriodicElement>(item);
+      this.selection = new SelectionModel<PeriodicElement>(true, []);
+    });
   }
 
 }

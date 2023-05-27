@@ -53,9 +53,20 @@ export class AuthenticationService {
     return user
   }
 
-  getEvenSourceDetails():Observable<any>{
+  getEvenSourceDetailsCount():Observable<any>{
     return this.http.get<any>(this.baseUrl+'verify-count' ,
     { headers: { authorization: this.createBasicAuthToken(this.getLoggedInUserName()) } });  
   }
+
+  getEvenSourceDetails(status:string):Observable<any>{
+    return this.http.get<any>(this.baseUrl+'fetch-event?status='+status ,
+    { headers: { authorization: this.createBasicAuthToken(this.getLoggedInUserName()) } });  
+  }
+
+  changeEventStatus(data:any,status:string):Observable<any>{
+    return this.http.post<any>(this.baseUrl+'event-status-change?status='+status ,data,
+    { headers: { authorization: this.createBasicAuthToken(this.getLoggedInUserName()) } });  
+  }
+
 
 }

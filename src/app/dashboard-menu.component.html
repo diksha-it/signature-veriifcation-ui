@@ -4,7 +4,7 @@
    
   </mat-card-header>
   <mat-tab-group (selectedTabChange)="onTabChanged($event);">
-    <mat-tab label="IFT – Signature Verification">  <verification-data ></verification-data></mat-tab>
+    <mat-tab label="IFT – Signature Verification">  <verification-data [request]="request"></verification-data></mat-tab>
     <mat-tab label="IFT – Signature Verification Data"> <verification-data-count [request]="request"></verification-data-count> </mat-tab>
 
   </mat-tab-group>

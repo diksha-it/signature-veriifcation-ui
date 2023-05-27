@@ -27,7 +27,7 @@ export class VeriifcationDataCountComponent implements OnInit,OnChanges ,OnDestr
 
   }
   ngOnChanges(changes: SimpleChanges ) {
-    this.authenticationService.getEvenSourceDetails().subscribe(d=>{
+    this.authenticationService.getEvenSourceDetailsCount().subscribe(d=>{
     this.dataSource=d;
     });
   }
