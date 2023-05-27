@@ -1,6 +1,7 @@
 import {  Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfigService } from './api.service';
+import { AuthenticationService } from './auth.service';
 
 @Component({
   selector: 'my-login-form',
@@ -45,7 +46,8 @@ export class LoginFormComponent implements OnInit{
         username: new FormControl('',Validators.required),
         password: new FormControl('',Validators.required),
       });
-      constructor(private configService:ConfigService){
+      constructor(private configService:ConfigService,
+        private authenticationService: AuthenticationService){
 
       }
     ngOnInit(): void {
@@ -55,10 +57,14 @@ export class LoginFormComponent implements OnInit{
 
   submit() {
     if (this.form.valid) {
-        this.configService.getUserDetails().subscribe(data=>{
-console.log(data);
-        });
-      this.submitEM.emit(true);
+        this.authenticationService.authenticationService(this.form.controls["username"].value, this.form.controls["password"].value).subscribe((result)=> {
+            this.submitEM.emit(true);
+    
+          }, () => {
+            this.error="User details invalid";
+            this.submitEM.emit(false);
+          });
+     
     }else{
         this.error="User details invalid"; 
     }

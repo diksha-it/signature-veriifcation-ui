@@ -7,10 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent  {
  isLoginSuccess:boolean=false;
-  open(event:any){
-    console.log
-    this.isLoginSuccess=true;
-
+  open(event:boolean){
+    this.isLoginSuccess=event;
   }
 
 }

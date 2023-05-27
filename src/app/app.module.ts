@@ -11,14 +11,25 @@ import { DashboardComponent } from './dashboard-menu.component';
 import { VeriifcationDataComponent } from './verification_data.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ConfigService } from './api.service';
+import { AuthenticationService } from './auth.service';
+import { HttpInterceptorService } from './httpInterceptor.service';
+import { VeriifcationDataCountComponent } from './verification-data-count.component';
 @NgModule({
-  imports:      [ BrowserModule, ReactiveFormsModule, MaterialModule, BrowserAnimationsModule,
-    MatTableModule,MatCheckboxModule,HttpClientModule],
-  declarations: [ AppComponent, LoginFormComponent ,DashboardComponent,VeriifcationDataComponent],
+  imports:      [
+      BrowserModule,
+      ReactiveFormsModule, 
+      MaterialModule, 
+      BrowserAnimationsModule,
+      HttpClientModule],
+  declarations: [ AppComponent, LoginFormComponent ,DashboardComponent,VeriifcationDataComponent,VeriifcationDataCountComponent],
   bootstrap:    [ AppComponent ],
-  providers:[HttpClient,ConfigService]
+  providers:[HttpClient,ConfigService,AuthenticationService,{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpInterceptorService,
+    multi: true
+  }]
 })
 export class AppModule { 
 }

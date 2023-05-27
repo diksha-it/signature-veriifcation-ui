@@ -1,5 +1,6 @@
 import { Input, Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'dashboard',
@@ -23,11 +24,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class DashboardComponent {
   isData:boolean=false;
+  request:any;
   verification(){
      this.isData=true;   
   }
 
   verificationData(){
+    this.isData=false;   
+  }
 
+  onTabChanged(tabChangeEvent: MatTabChangeEvent){
+     this.request=tabChangeEvent.tab;
   }
 }
