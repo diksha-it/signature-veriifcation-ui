@@ -1,0 +1,102 @@
+<mat-card style="text-align: left">
+    <mat-card-title>Signature Verification</mat-card-title>
+  <mat-card-content>
+  <form [formGroup]="form">
+  <p>
+    Comment History
+    <mat-form-field>
+      <input type="text" matInput placeholder="comments" formControlName="comments">
+    </mat-form-field>
+  </p>
+  
+  <p>
+    Document Section
+    <mat-form-field>
+      <input type="text" matInput placeholder="Reference" formControlName="businessKey">
+    </mat-form-field>
+  </p>
+
+
+  <p>
+    Transfer Details
+    <mat-form-field>
+      <input type="text" matInput placeholder="Currency" formControlName="transactionCurrency">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Amount" formControlName="transactionAmount">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="MUR Equivalent" formControlName="amountInMur">
+    </mat-form-field>
+  </p>
+
+  <p>
+    Debit Account Details
+    <mat-form-field>
+      <input type="text" matInput placeholder="Account Number" formControlName="debitAccountNumber">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Name" formControlName="accountShortName">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Currency" formControlName="debitAccountCcy">
+    </mat-form-field>
+  </p>
+
+  <p>
+    Payment Details
+    <mat-form-field>
+      <input type="text" matInput placeholder="Payment Details 1" formControlName="paymentDetails1">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Payment Details 2"  formControlName="paymentDetails2">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Payment Details 3"  formControlName="paymentDetails3">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Payment Details 4"  formControlName="paymentDetails4">
+    </mat-form-field>
+  </p>
+
+ 
+    <div class="button">
+      <button  mat-button color="primary" (click)="openBottomSheet()">Verify Signature</button>
+    </div>
+  
+
+  <p>
+    Payment Details
+    <mat-radio-group aria-label="Signature Ok" formControlName="verfied">
+      <mat-radio-button value="Yes">Yes</mat-radio-button>
+      <mat-radio-button value="No">No</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field>
+      <mat-label>Discrepancy Reason</mat-label>
+      <mat-select formControlName="discrepancyReason">
+        <mat-option *ngFor="let reason of reasons" [value]="reason.value">
+          {{reason.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  
+  
+  <!-- <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
+   -->
+  <div class="button">
+    <button  mat-button color="primary" (click)="submit('proceed')">Proceed</button>
+  </div>
+  <div class="button">
+    <button  mat-button color="primary" (click)="submit('reject')">Reject</button>
+  </div>
+  
+  </form>
+  </mat-card-content>
+  <mat-card-content>
+    <div id="viewer">
+    </div>
+  </mat-card-content>
+  </mat-card>

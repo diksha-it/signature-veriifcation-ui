@@ -1,6 +1,5 @@
 import {  Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ConfigService } from './api.service';
 import { AuthenticationService } from './auth.service';
 
 @Component({
@@ -46,7 +45,7 @@ export class LoginFormComponent implements OnInit{
         username: new FormControl('',Validators.required),
         password: new FormControl('',Validators.required),
       });
-      constructor(private configService:ConfigService,
+      constructor(
         private authenticationService: AuthenticationService){
 
       }

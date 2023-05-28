@@ -11,11 +11,17 @@
           class="demo-button">
            Reject
       </button>
+      <button
+      mat-raised-button
+      (click)="openRequest()"
+      class="demo-button">
+       View
+  </button>
     </div>
   </mat-card-content>
   <mat-card-content>
     
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
   <!-- Checkbox Column -->
   <ng-container matColumnDef="select">
@@ -85,6 +91,8 @@
       (click)="selection.toggle(row)">
   </tr>
 </table>
+
   </mat-card-content>
+  
 </mat-card>
 

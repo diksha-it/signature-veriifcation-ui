@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "@grapecity/gcpdfviewer"
+              ],
             "outputPath": "dist/signature_verfication_ui",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,8 +38,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "8mb",
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",

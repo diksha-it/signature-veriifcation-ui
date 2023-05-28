@@ -1,4 +1,4 @@
-import {  Component, Input, SimpleChanges } from '@angular/core';
+import {  Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
 import { AuthenticationService } from './auth.service';
@@ -11,22 +11,27 @@ export interface PeriodicElement {
   accountShortName:string;
   transactionCurrency:string;
   transactionAmount:number;
+amountInMur:number;
+application:string;
+comments:string;
+createdBy:string;
+debitAccountCcy:string;
+debitAccountNumber:string;
+discrepancyReason:string;
+paymentDetails1:string;
+paymentDetails2:string;
+paymentDetails3:string;
+paymentDetails4:string;
+status:string;
+updatedBy:string;
+updatedOn:string;
+verfied:string;
 }
 @Component({
   selector: 'verification-data',
   templateUrl: './verification-data.component.html',
   styles: [
     `
-    :host {
-      display: flex;
-      justify-content: left;
-    }
-
-    mat-card-title,
-    mat-card-content {
-      display: flex;
-      justify-content: left;
-    }
     `,
   ],
   
@@ -38,13 +43,16 @@ export class VeriifcationDataComponent {
   
   dataSource = new MatTableDataSource<PeriodicElement>([]);
   selection = new SelectionModel<PeriodicElement>(true, []);
+  clickedRows = new Set<PeriodicElement>();
 
+  @Output() openRequestData = new EventEmitter<any>();
   @Input()request: any={};
 
   constructor(private authenticationService: AuthenticationService){
 
   }
   ngOnChanges(changes: SimpleChanges ) {
+    this.selection.clear();
    this.getAllDetails();
   }
 
@@ -93,5 +101,17 @@ export class VeriifcationDataComponent {
       this.selection = new SelectionModel<PeriodicElement>(true, []);
     });
   }
+
+  openRequest(){
+  console.log(this.selection.selected);
+    if(this.selection.selected.length==1){
+       this.openRequestData.emit(this.selection.selected[0]);
+    }else{
+      alert("Only one request can open one time");
+
+    }
+  }
+
+
 
 }

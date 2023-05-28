@@ -1,5 +1,4 @@
-import { Input, Component, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {  Component } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
@@ -8,16 +7,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
  
   styles: [
     `
-    :host {
-      display: flex;
-      justify-content: left;
-    }
-
-    mat-card-title,
-    mat-card-content {
-      display: flex;
-      justify-content: left;
-    }
+    
     `,
   ],
 
@@ -25,6 +15,9 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 export class DashboardComponent {
   isData:boolean=false;
   request:any;
+  isOpen:boolean=false;
+  requestData:any={};
+
   verification(){
      this.isData=true;   
   }
@@ -35,5 +28,14 @@ export class DashboardComponent {
 
   onTabChanged(tabChangeEvent: MatTabChangeEvent){
      this.request=tabChangeEvent.tab;
+  }
+
+  fillForm(data:any){
+     this.isOpen=true;
+     this.requestData=data;
+  }
+  responseDataOutput(request:any){
+    this.isOpen=false;
+    this.request=request;
   }
 }

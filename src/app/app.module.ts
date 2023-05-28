@@ -9,13 +9,12 @@ import { LoginFormComponent } from './login-form.component';
 import { MaterialModule } from './material.module';
 import { DashboardComponent } from './dashboard-menu.component';
 import { VeriifcationDataComponent } from './verification_data.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { ConfigService } from './api.service';
 import { AuthenticationService } from './auth.service';
 import { HttpInterceptorService } from './httpInterceptor.service';
 import { VeriifcationDataCountComponent } from './verification-data-count.component';
+import { RequestComponent } from './request.component';
+import { BottomSheetOverviewExampleSheet } from './bottomsheet.component';
 @NgModule({
   imports:      [
       BrowserModule,
@@ -23,9 +22,10 @@ import { VeriifcationDataCountComponent } from './verification-data-count.compon
       MaterialModule, 
       BrowserAnimationsModule,
       HttpClientModule],
-  declarations: [ AppComponent, LoginFormComponent ,DashboardComponent,VeriifcationDataComponent,VeriifcationDataCountComponent],
+  declarations: [ AppComponent, LoginFormComponent ,DashboardComponent,VeriifcationDataComponent,
+    VeriifcationDataCountComponent,RequestComponent,BottomSheetOverviewExampleSheet],
   bootstrap:    [ AppComponent ],
-  providers:[HttpClient,ConfigService,AuthenticationService,{
+  providers:[HttpClient,AuthenticationService,{
     provide: HTTP_INTERCEPTORS,
     useClass: HttpInterceptorService,
     multi: true
